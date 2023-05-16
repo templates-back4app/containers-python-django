@@ -1,7 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim-buster
 
-# Set environment variables
+# Set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
@@ -10,10 +10,14 @@ WORKDIR /code
 
 # Install dependencies
 COPY requirements.txt /code/
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Copy project
 COPY . /code/
 
-# Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Expose port
+EXPOSE 8000
+
+# Run the application:
+CMD ["gunicorn", "myapp.wsgi:application", "--bind", "0.0.0.0:8000"]
