@@ -1,23 +1,11 @@
-# Use an official Python runtime as a parent image
+# syntax=docker/dockerfile:1
 FROM python:3.9-slim-buster
 
-# Set environment varibles
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+WORKDIR /app
 
-# Set work directory
-WORKDIR /code
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-# Install dependencies
-COPY requirements.txt /code/
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+COPY . .
 
-# Copy project
-COPY . /code/
-
-# Expose port
-EXPOSE 8000
-
-# Run the application:
-CMD ["gunicorn", "myapp.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD [ "gunicorn", "containers_python_django.wsgi:application", "--bind", "0.0.0.0:8000" ]
