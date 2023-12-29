@@ -31,8 +31,13 @@
  ```bash
  pip install -r requirements.txt
  ```
+3. For local testing set/change allowed host in settings.py (don't forget to revert when deploying)
  
- 3. Run the Django application locally.
+    ```
+     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ```
+
+ 5. Run the Django application locally.
  
  ```bash
  python manage.py runserver
